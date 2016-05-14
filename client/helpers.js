@@ -1,5 +1,25 @@
 // get colors
-colors = d3.scale.category20();
+var defaultColors = d3.scale.category20(); // default value
+
+categoriesColors = {
+  "laboratoire" : "#3182bd",
+  "etablissement" :"#9ecae1",
+  "ecole-doctorale" :"#deebf7",
+
+  "enseignement" : "#ffffb2",
+  "médiation" :"#fecc5c",
+  "creation" :"#fd8d3c",
+  "patrimoine" :"#f03b20",
+  "cst" : "#bd0026",
+
+  "ville" : "#31a354"
+};
+
+colors = function(group){
+  if (Object.keys(categoriesColors).indexOf(group) > -1)  return categoriesColors[group]
+  else return defaultColors(group);
+}
+
 
 Template.registerHelper( 'objectToPairs', function( object ) {
     return _.map( object, function( value, key ) {
