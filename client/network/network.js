@@ -52,7 +52,7 @@ Template.network.rendered = function() {
         style: cytoscape.stylesheet()
             .selector('node')
               .style({
-                'font-size': 6,//this.graphState.fontSize,
+                'font-size': 10,//this.graphState.fontSize,
                 'text-valign': 'center',
                 'text-halign': 'right',
                 'color': 'gray',
@@ -237,14 +237,26 @@ Template.network.rendered = function() {
       self.graph.edges().hide();
       subGraph.show();
 
+      subGraph.add(selectedNodes)
+
       // store actual position
       subGraph.nodes().forEach(function(d){
         var prevPos = Object({"x":d.position().x, "y":d.position().y})
         d.data("prevPos", prevPos);
       })
 
+      subGraph.style({
+        // 'font-size' : 24,
+        // 'color' : 'black',
+        // 'text-max-width': 150,
+        'label': function(d) {
+          return d.data("name") ? d.data("name") : "";
+        }
+      })
+
       // apply focus layout
       subGraph.layout({"name":"concentric"})
+
     }
 
     this.graph.unFocus = function(){
@@ -255,6 +267,14 @@ Template.network.rendered = function() {
           d.position(d.data("prevPos"))
           delete d.removeData("prevPos")
         }
+        d.style({
+          // 'border-width': 0,
+          // 'font-size' : 6,
+          // 'color' : 'gray',
+          'label': function(d) {
+            return d.data("name") ? d.data("name").trunc(20) : "";
+          }
+        })
       })
       self.graph.layout({"name":"preset"})
       // shopw everything
