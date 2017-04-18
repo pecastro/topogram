@@ -184,13 +184,22 @@ export const nodeUpdate = new ValidatedMethod({
 */
 export const nodeMove = new ValidatedMethod({
   name: 'node.move',
+  validate: null,
   validate: new SimpleSchema({
     'nodeId': { type: String },
     'position.x': { type: Number },
     'position.y': { type: Number }
   }).validator(), // TODO :check if ID exists,
   run({ nodeId, position }) {
-    return Nodes.update({ 'data.id': nodeId }, { $set: { position }})
+    console.log("PEC DBG: nodeMove API ...")
+    console.log("PEC DBG: " + JSON.stringify({ 'data.id': nodeId ,"position":position }))
+
+    // let foo = Nodes.update({ 'data.id': nodeId }, { $set: { position }})
+    let foo=Nodes.update({ "data.id": nodeId },
+                              { $set: { "position.x":position.x,"position.y":position.y} })
+
+    console.log("PEC DBG: Nodes.update " + foo)
+    return foo
   }
 })
 

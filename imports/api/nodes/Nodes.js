@@ -11,7 +11,7 @@ export const Nodes = new NodesCollection('nodes')
 // Deny all client-side updates since we will be using methods to manage this collection
 Nodes.deny({
   insert() { return true },
-  update() { return true },
+//  update() { return true },
   remove() { return true }
 })
 
